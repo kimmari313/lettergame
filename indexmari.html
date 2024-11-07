@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mari game</title>
+    <style>
+        body, html{ width:100%; height:100%;}
+        body, section, button{ margin:0; padding:0;}
+        img{ display:block;}
+        body{ margin:auto;}
+        section{
+            width:360px; height:800px; margin:0px auto;
+            position:relative;
+            background:url("img/Android\ Large\ -\ 1.png") center center;
+        }
+        button{
+            position:absolute; bottom:150px; right:20px;
+            border:0px; background:transparent; cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <button class="start"><img src="img/start.png" alt=""></button>
+    </section>
+    <script>
+        document.querySelector('.start').addEventListener('click',()=>{
+      window.location.href='gamemari.html';
+    });
+    </script>
+</body>
+</html>

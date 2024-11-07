@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main game page</title>
+    <style>
+        @font-face {
+    font-family: 'Yak';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2205-2@1.0/Yak.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Paperlogy-8ExtraBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+        body, html{ width:100%; height:100%; font-family: 'Yak';}
+        body, section, h2, h3, button{ margin:0; padding:0;}
+        img{ display:block;}
+        button{ border:0; background:transparent;}
+        body{ display:flex; justify-content: center; align-items: center;}
+        section{ width:360px; height:800px;}
+        span>img{ width:32px; height:135px;}
+        .play{
+             position:relative; background-image:url("img/image\ 3.png");
+             
+            }
+        .play>.playbox{
+            width:300px; height:400px; margin:100px 31px;
+            display:flex; flex-flow:row wrap; gap:34px;
+            justify-content: center; align-items: center;
+            
+            }
+        .play>h2{
+            margin:15px auto 0; display:flex;
+            font-size:36px;  justify-content: center; align-self: center;
+        }
+        .play>.targetscore{
+            font-size:30px; position:absolute; left:0; top:50px;
+        }
+        .play>.score{
+            font-size:30px; position:absolute; right:10px; top:50px;
+        }
+        .letter{
+            background:url("img/open.png")no-repeat center bottom;
+            background-size:contain;
+             width:76px; height:101px;
+            }
+        .letter.let{
+            background:url("img/empty.png")no-repeat center bottom;
+            background-size:contain;
+        }
+        .seal>img{ width:32px; height:135px; }
+        .seal>p>img{ width:41px; height:30px;}
+        .seal{
+             position:absolute;
+             transform:translateY(-170px);
+             pointer-events:none;
+            }
+        .end{
+            display:block; display:none;
+        }
+        .end_clear{
+            display:block; display:none;
+            background:url("img/image 4.png")no-repeat top center;
+            padding-top:200px;
+        }
+        .end_clear>h3{
+            margin:0 63px 35px 63px;
+        }
+        .end_clear>p{
+            margin:0 0 0 63px; font-size:100px;
+            font-family: 'Paperlogy-8ExtraBold';
+        }
+        .end_clear>button{ margin-left:63px; display:block;}
+        .end_lose{
+            display:block; display:none;
+            background:url("img/image\ 6.png")no-repeat top center;
+            padding-top:200px;
+        }
+        .end_lose>h3{ margin:0 63px 35px 63px;}
+        .end_lose>p{ 
+            color:#fff;
+            margin:0 0 0 63px; font-size:100px; 
+            font-family: 'Paperlogy-8ExtraBold';
+        }
+        .end_lose>button{ margin-left:63px; display:block;}
+        .sealing_wax{ position:absolute; bottom:0; left:0;}
+    </style>
+</head>
+<body>
+
+    <section class="play">
+        <h2 class="time">time : 00:00</h2>
+        <p class="targetscore">target score : 10</p>
+        <p class="score">score : 0</p>
+        <div class="playbox">
+            <div class="l1">
+                <div class="letter"></div>
+            </div>
+            <div class="l2">
+                <div class="letter"></div>
+            </div>
+            <div class="l3">
+                <div class="letter"></div>
+            </div>
+            <div class="l4">
+                <div class="letter"></div>
+            </div>
+            <div class="l5">
+                <div class="letter"></div>
+            </div>
+            <div class="l6">
+                <div class="letter"></div>
+            </div>
+            <div class="l7">
+                <div class="letter"></div>
+            </div>
+            <div class="l8">
+                <div class="letter"></div>
+            </div>
+            <div class="l9">
+                <div class="letter"></div>
+            </div>
+        </div>
+        <div class="sealing_wax">
+            <img src="img/Sealing wax.png" alt="">
+        </div>
+    </section>
+    <span class="seal">
+        <img src="img/tool.png" alt="" class="to">
+        <p><img src="img/melting.png" alt="" width="48px" height="36px"></p>
+    </span>
+    <section class="end">
+        <section class="end_clear" >
+        <h3><img src="img/clear.png" alt=""></h3>
+        <p><img src="img/You’r score.png" alt=""></p>
+        <p class="score">0</p>
+        <button class="replay"><img src="img/replay_.png" alt=""></button>
+
+    </section>
+    <section class="end_lose" >
+        <h3><img src="img/lose.png" alt=""></h3>
+        <p><img src="img/You’r score_white.png" alt=""></p>
+        <p class="score">0</p>
+        <button class="replay"><img src="img/replay_.png" alt=""></button>
+    </section>
+    </section>
+    
+    <script>
+        //카운트 다운
+        const countDownDisplay = document.createElement('div');
+        countDownDisplay.classList.add('countdown');
+        countDownDisplay.style.position = 'fixed';
+        /*
+        countDownDisplay.style.top = '50%';
+        countDownDisplay.style.left = '50%';
+        countDownDisplay.style.transform = 'translate(-50%,-50%)';
+        */
+        countDownDisplay.style.top = '0px';
+        countDownDisplay.style.left = '0px';
+        countDownDisplay.style.width = '100vw';
+        countDownDisplay.style.height = '100vh';
+        countDownDisplay.style.zIndex = '10000';
+        countDownDisplay.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        countDownDisplay.style.display = 'flex';
+        countDownDisplay.style.justifyContent = 'center';
+        countDownDisplay.style.alignItems = 'center';
+        countDownDisplay.style.fontSize = '100px';
+        countDownDisplay.style.color = '#000';
+        countDownDisplay.style.fontWeight = 'bold';
+        document.body.appendChild( countDownDisplay );   
+
+        let countDown = 5; 
+        //document.body.style.filter = `brightness(${100-countDown*20}%)`;
+        const InitCountDown = ()=>{
+            countDownDisplay.innerHTML = countDown;        
+            countDown--;
+           //document.body.style.filter = `brightness(${100-countDown*20}%)`;
+            if( countDown<0 ){ // ==-1
+              countDownDisplay.innerHTML = 'START'
+            }
+            if( countDown<-1 ){
+              clearInterval( countDownInterval );
+              startGame();
+              document.body.style.filter = 'none';
+            }
+        }
+        InitCountDown();
+        let countDownInterval = setInterval( InitCountDown , 1000 );
+
+        const resultArea = document.querySelector('.end');
+        const tool= document.querySelector('.seal');
+        const toolImg = tool.querySelector('.to');
+        const letterBox = document.querySelectorAll('.playbox>div>div');
+        const time = document.querySelector('.time');
+        const score = document.querySelector('.score');
+        const playArea = document.querySelector('.play');
+        const lett = document.querySelector('.let');
+        const cleaR = document.querySelector('.end_clear');
+        const losE = document.querySelector('.end_lose');
+        const replays = document.querySelectorAll('.replay');
+        
+
+        let targetTimer;
+        let clickable = false;
+        let playTime = 10;
+        let targetscore;
+        let gameScore= 0;
+        let timer;
+        score.innerHTML = gameScore*1;
+        document.querySelector('.score').innerHTML = `score : ${gameScore*1}`;
+        document.querySelector('.time').innerHTML = ('time');
+
+
+        //게임 시작시
+        const startGame=()=>{
+            countDownDisplay.style.display='none';
+            time.innerHTML = playTime;
+            const countDownTimer =()=>{
+            //document.querySelector('.time').innerHTML = `time : ${time}`;
+            playTime--;
+            time.innerHTML = playTime;
+            if( playTime === 0 ){
+              clearInterval(timer);
+              clearInterval(targetTimer);
+              playArea.style.display = 'none';
+              resultArea.style.display = 'block';
+              document.body.style.cursor = 'default';
+              tool.style.display = 'none';
+              endGame();
+            }
+            
+        }
+    timer = setInterval( countDownTimer, 1000);
+    }
+    const endGame = () => {
+    playTime = 0;
+
+    
+    if (gameScore >= 10) {
+        cleaR.style.display = 'block'; 
+        losE.style.display = 'none'; 
+        document.querySelector('.end_clear .score').innerHTML = gameScore;
+    } 
+    
+    else {
+        cleaR.style.display = 'none'; 
+        losE.style.display = 'block'; 
+        document.querySelector('.end_lose .score').innerHTML = gameScore;
+    }
+
+    playArea.style.display = 'none'; 
+    resultArea.style.display = 'block'; 
+};
+
+              
+        
+        //마우스
+        document.addEventListener('mousemove', (e)=>{
+            tool.style.left=e.clientX+'px';
+            tool.style.top=e.clientY+'px';
+            document.addEventListener('mousedown',()=>{
+                toolImg.style.transform='translateY(30px)';
+            });
+            document.addEventListener('mouseup',()=>{
+                toolImg.style.transform='translateY(0px)';
+            });
+        });
+        
+        
+        letterBox.forEach((lett,idx)=>{
+            //document.getElementById('img')
+            lett.addEventListener('mousedown', ()=>{
+                if( idx===randomNum ){
+                   console.log('point');
+                   gameScore++;
+                score.innerHTML =`score : ${gameScore*1}`;
+                clickable = false;
+                }                
+            })
+            /*lett.addEventListener('click',()=>{
+                console.log('point');
+                gameScore++;
+                score.innerHTML =`score : ${gameScore*1}`;
+                clickable = false;
+          
+            })*/
+        })/*
+        document.querySelectorAll('.letter>img').forEach((img)=>{
+            img.addEventListener('click',()=>{
+                if(clickable){
+                    console.log('point');
+                    gameScore++;
+                    score.innerHTML =`score : ${gameScore*1}`;
+                    clickable = false;
+                }
+            })
+        })*/
+        
+        //랜덤으로 사진 변경
+        let randomNum = 0;
+        setInterval(()=>{ 
+            letterBox.forEach((letter)=>{letter.classList.remove('let')});
+            randomNum = Math.floor(Math.random()*9);
+            letterBox[randomNum].classList.add('let');
+
+        }, 1000);
+        replays.forEach(replay=>{
+            replay.addEventListener('click',()=>{
+            gameScore = 0;
+            playTime = 10;
+            clickable = false;
+            countDown = 5;
+            playArea.style.display = 'block';
+            score.innerHTML = 0;
+            resultArea.style.display = 'none';
+            countDownDisplay.style.display='flex';
+            InitCountDown();
+            countDownInterval = setInterval( InitCountDown , 1000 );
+            tool.style.display = 'block';
+        });
+    });
+        
+        
+
+        
+    </script>
+</body>
+</html>
